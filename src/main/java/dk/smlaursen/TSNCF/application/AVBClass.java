@@ -1,7 +1,7 @@
 package dk.smlaursen.TSNCF.application;
 
 public enum AVBClass {
-	CLASS_A(125,  2000), 
+	CLASS_A(125, 2000), 
 	CLASS_B(250, 50000);
 
 	private int aInterval;

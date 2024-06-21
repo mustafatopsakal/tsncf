@@ -42,6 +42,7 @@ public class ModifiedAVBEvaluator implements Evaluator{
 		// Then we identify all the different modes 
 		Map<String, Set<Multicast>> modeMap = new HashMap<String, Set<Multicast>>();
 		for(Multicast m : multicasts){
+			//System.out.println("TitleM1: " + m.getApplication().getTitle() + " Interval: " + m.getApplication().getInterval());
 			if(m.getApplication() instanceof AVBApplication){
 				AVBApplication app = (AVBApplication) m.getApplication();
 				for(String mode : app.getModes()){
@@ -57,6 +58,10 @@ public class ModifiedAVBEvaluator implements Evaluator{
 				for(Unicast u : m.getUnicasts()){
 					for(GCLEdge edge : u.getRoute().getEdgeList()){
 						double reservedTTTraffic = edge.calculateReservedForTTTraffic(125);
+						//System.out.println("Title: " + u.getApplication().getTitle() + "U Interval: " + u.getApplication().getInterval());
+						//System.out.println("Title: " + m.getApplication().getTitle() + "M Interval: " + m.getApplication().getInterval());
+
+						//double reservedTTTraffic = edge.calculateReservedForTTTraffic(u.getApplication().getInterval());
 						ttAllocMap.put(edge, reservedTTTraffic);
 					}
 				}
@@ -105,12 +110,12 @@ public class ModifiedAVBEvaluator implements Evaluator{
 					double totalAllocMbps = allocMap.get(edge) + allocMbps;
 
 					//Abort if edge-capacity exceeded (remember not 100% of the edge is allowed to be reserved)
-					if(totalAllocMbps > edge.getRateMbps() * edge.getAllocationCapacity()){
+					/*if(totalAllocMbps > edge.getRateMbps() * edge.getAllocationCapacity()){
 						if(logger.isDebugEnabled()){
 							logger.debug("Route invalid : edge "+edge+"'s capacity exceeded. "+totalAllocMbps+"/"+(edge.getRateMbps() * edge.getAllocationCapacity())+" Route : "+route);
 						}
 						cost.add(Objective.one, 1);
-					}
+					}*/
 					allocMap.put(edge, totalAllocMbps);
 				}
 			}

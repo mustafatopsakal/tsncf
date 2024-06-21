@@ -108,7 +108,11 @@ public class ApplicationParser {
 		//Parse Destinations
 		EndSystem[] dest = parseDestinations(srAppEle);
 
-		return new AVBApplication(name, modes, type, payloadSize, noOfFrames, src, dest);
+		//Create AVB App and Set Interval Value
+		AVBApplication newAvbApp = new AVBApplication(name, modes, type, payloadSize, noOfFrames, src, dest);
+		newAvbApp.setInterval(Integer.parseInt(String.valueOf(parseaInterval(srAppEle))));
+
+		return newAvbApp;
 	}
 
 	/**Parses an element into a {@link TTApplication}
@@ -134,6 +138,11 @@ public class ApplicationParser {
 
 	private static EndSystem parseSource(Element ele){
 		return new EndSystem(((Element) ele.getElementsByTagName("Source").item(0)).getAttribute("name"));
+	}
+	
+	
+	private static int parseaInterval(Element ele){
+		return Integer.parseInt(ele.getElementsByTagName("Interval").item(0).getFirstChild().getNodeValue());
 	}
 
 	private static EndSystem[] parseDestinations(Element ele){

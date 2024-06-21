@@ -3,6 +3,8 @@ package dk.smlaursen.TSNCF;
 import java.io.File;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -20,7 +22,7 @@ import dk.smlaursen.TSNCF.application.Application;
 import dk.smlaursen.TSNCF.architecture.GCLEdge;
 import dk.smlaursen.TSNCF.architecture.Node;
 import dk.smlaursen.TSNCF.evaluator.ModifiedAVBEvaluator;
-import dk.smlaursen.TSNCF.output.FileWriter;
+import dk.smlaursen.TSNCF.output.ModifiedFileWriter;
 import dk.smlaursen.TSNCF.output.Visualizer;
 import dk.smlaursen.TSNCF.parser.ApplicationParser;
 import dk.smlaursen.TSNCF.parser.TopologyParser;
@@ -29,10 +31,12 @@ import dk.smlaursen.TSNCF.solver.Solver;
 import dk.smlaursen.TSNCF.solver.GRASP.GraspSolver;
 import dk.smlaursen.TSNCF.solver.KShortestPath.KShortestPathSolver_SR;
 
+
 public class Main {
 	//Command line options
 	private static final String APP_ARG = "app",NET_ARG = "net", OUTPUT_ARG = "out", RATE_ARG = "rate", DISP_ARG = "display", VERBOSE_ARG = "verbose", K_ARG="K", SOLVER_ARG="GRASP";
 
+	
 	//FIXME todos
 	//////////////////////////////////////////////
 	//TODO Create pre-processor and validator
@@ -43,11 +47,12 @@ public class Main {
 		//Default value of K
 		int K = 50;
 		//Default value of rate (mbps)
-		int rate = 100;
+		int rate = 1000;
 		
 		Option architectureFile = Option.builder(NET_ARG).required().argName("file").hasArg().desc("Use given file as network").build();
 		Option applicationFile = Option.builder(APP_ARG).required().argName("file").hasArg().desc("Use given file as application").build();
 		Option outputFile = Option.builder(OUTPUT_ARG).argName("file").hasArg().desc("Writes output to file").build();
+		
 		
 		Options options = new Options();
 		options.addOption(applicationFile);
@@ -60,6 +65,7 @@ public class Main {
 		options.addOption(DISP_ARG, false, "Display output");
 
 		
+
 
 		CommandLineParser parser = new DefaultParser();
 		try {
@@ -135,7 +141,7 @@ public class Main {
 				if(line.hasOption(OUTPUT_ARG)){
 					File f = new File(line.getOptionValue(OUTPUT_ARG));
 					logger.info("Writing solution to file "+f);
-					FileWriter.Output(sol, f);
+					ModifiedFileWriter.Output(sol, f.toString());
 				}
 			}
 		} catch (ParseException e) {
@@ -145,4 +151,5 @@ public class Main {
 			formatter.printHelp("ant", options );
 		}
 	}
+
 }

@@ -9,6 +9,8 @@ public class AVBApplication extends Application {
 	private AVBClass aAVBClass;
 	private List<String> aModes;
 	private int aNoOfFramesPerInterval,aMaxFrameSize;
+	private int aInterval;
+
 	
 	public AVBApplication (String name, List<String> modes, AVBClass type, int payloadSize, int noOfFrames, EndSystem src, EndSystem ...dest){
 		super(name, src, dest);
@@ -33,10 +35,24 @@ public class AVBApplication extends Application {
 		return aModes;
 	}
 	
+	/*
 	@Override
 	public int getInterval() {
 		return aAVBClass.getIntervalMicroSec();
 	}
+	*/
+	
+	@Override
+	public int getInterval() {
+		return aInterval;
+	}
+	
+	
+	public void setInterval(int aInterval)
+	{
+		this.aInterval = aInterval;
+	}
+	
 	
 	@Override
 	public int getDeadline(){

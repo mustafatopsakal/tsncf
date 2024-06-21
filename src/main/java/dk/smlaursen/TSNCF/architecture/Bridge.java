@@ -6,8 +6,10 @@ public class Bridge extends Node {
 	
 	public Bridge(String id){
 		aId = id;
-		aRateMBPS = 100;
+		//aRateMBPS = 100;
+		aRateMBPS = 1000;
 		aMacDelay_us = 5.12;
+		//aMacDelay_us = 0;
 	}
 	
 	public Bridge(String id, int rateMBPS, double macDelay_us){

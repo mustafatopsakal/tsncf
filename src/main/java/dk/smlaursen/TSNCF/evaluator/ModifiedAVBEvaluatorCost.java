@@ -68,7 +68,23 @@ public class ModifiedAVBEvaluatorCost implements Cost, Comparator<ModifiedAVBEva
 	}
 	
 	public String toDetailedString(){
-		return "Total : "+toString()+" | o1 "+obj1+", o2 "+obj2+", o3 "+obj3+" -- "+aWCDMap+" --";
+		//return "Total : "+toString()+" | o1 "+obj1+", o2 "+obj2+", o3 "+obj3+" -- "+ aWCDMap+" --";
+		
+		return "Total : "+toString()+" | o1 "+obj1+", o2 "+obj2+", o3 "+obj3+" --\n" + getaWCDMap();
+	}
+	
+	public String getaWCDMap()
+	{
+		String staWCDMap = "";
+		
+		for ( Map.Entry<Multicast, Double> entry : aWCDMap.entrySet()) {
+		    String key = entry.getKey().toString();
+		    String tab = entry.getValue().toString();
+		    // do something with key and/or tab
+		    staWCDMap += key + " MaxLatency: " + tab + "\n";
+		}
+		
+		return staWCDMap;
 	}
 }
 
